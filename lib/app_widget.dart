@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ui/pages/home_page.dart';
+
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
@@ -7,6 +9,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Get to Know Me Better | devkaio',
+      home: HomePage(),
     );
   }
 }
