@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 
 class First extends StatelessWidget {
@@ -22,11 +23,16 @@ class First extends StatelessWidget {
                 return ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1500.0),
                   child: Row(
-                    children: const [
-                      WhoAmIWidget(),
-                      Spacer(),
-                      SizedBox(width: 32.0),
-                      ProfilePictureWidget(
+                    children: [
+                      WhoAmIWidget(
+                        size: Size(
+                          constraints.maxWidth,
+                          constraints.maxHeight,
+                        ),
+                      ),
+                      const Spacer(),
+                      const SizedBox(width: 32.0),
+                      const ProfilePictureWidget(
                         size: Size(350.0, 350.0),
                       ),
                     ],
@@ -34,9 +40,13 @@ class First extends StatelessWidget {
                 );
               } else {
                 return Column(
-                  children: const [
-                    ProfilePictureWidget(),
+                  children: [
+                    const ProfilePictureWidget(),
                     WhoAmIWidget(
+                      size: Size(
+                        constraints.maxWidth,
+                        constraints.maxHeight,
+                      ),
                       crossAxisAlignment: CrossAxisAlignment.center,
                     ),
                   ],
@@ -87,13 +97,35 @@ class ProfilePictureWidget extends StatelessWidget {
 }
 
 class WhoAmIWidget extends StatelessWidget {
+  final Size size;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   const WhoAmIWidget({
     Key? key,
+    this.size = Size.zero,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
   }) : super(key: key);
+
+  double get titleFontSize {
+    if (size.width < 640) {
+      return 64.0;
+    } else if (size.width < 1200) {
+      return 84.0;
+    } else {
+      return 112.0;
+    }
+  }
+
+  double get subtitleFontSize {
+    if (size.width < 640) {
+      return 36.0;
+    } else if (size.width < 1200) {
+      return 48.0;
+    } else {
+      return 64.0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,36 +133,43 @@ class WhoAmIWidget extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        FittedBox(
-          child: Text(
-            "Quem sou eu?",
-            style: Theme.of(context)
-                .textTheme
-                .headline1
-                ?.apply(color: Colors.white),
+        Text(
+          "Quem sou eu?",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: titleFontSize,
           ),
         ),
         Text(
           "Kaio Costa de Oliveira",
           textAlign: TextAlign.center,
-          style:
-              Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: subtitleFontSize,
+          ),
         ),
         Text(
           "Flutter Developer",
           textAlign: TextAlign.center,
-          style:
-              Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: subtitleFontSize,
+          ),
         ),
         Text(
           "29 anos",
-          style:
-              Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: subtitleFontSize,
+          ),
         ),
         Text(
           "Casado",
-          style:
-              Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: subtitleFontSize,
+          ),
         ),
       ],
     );
