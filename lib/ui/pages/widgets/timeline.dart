@@ -32,6 +32,7 @@ class MyTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Timeline.tileBuilder(
       scrollDirection: scrollDirection,
+      physics: const NeverScrollableScrollPhysics(),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.before,
         itemCount: list.length,

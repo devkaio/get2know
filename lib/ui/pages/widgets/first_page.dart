@@ -16,12 +16,12 @@ class First extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(100.0),
-            child: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth >= 1200.0) {
-                return ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1500.0),
+          LayoutBuilder(builder: (context, constraints) {
+            if (constraints.maxWidth >= 1400.0) {
+              return ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1500.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(100.0),
                   child: Row(
                     children: [
                       WhoAmIWidget(
@@ -37,9 +37,13 @@ class First extends StatelessWidget {
                       ),
                     ],
                   ),
-                );
-              } else {
-                return Column(
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const ProfilePictureWidget(),
                     WhoAmIWidget(
@@ -50,10 +54,10 @@ class First extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                     ),
                   ],
-                );
-              }
-            }),
-          ),
+                ),
+              );
+            }
+          }),
           Positioned(
             left: 0,
             right: 0,
@@ -85,7 +89,11 @@ class ProfilePictureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(size.width)),
+      borderRadius: BorderRadius.all(
+        Radius.circular(
+          size.width / 2,
+        ),
+      ),
       child: Image.network(
         'https://avatars.githubusercontent.com/u/3959419',
         fit: BoxFit.cover,
@@ -108,9 +116,11 @@ class WhoAmIWidget extends StatelessWidget {
   }) : super(key: key);
 
   double get titleFontSize {
-    if (size.width < 640) {
+    if (size.width < 480) {
+      return 36.0;
+    } else if (size.width < 640) {
       return 64.0;
-    } else if (size.width < 1200) {
+    } else if (size.width < 1400) {
       return 84.0;
     } else {
       return 112.0;
@@ -118,9 +128,11 @@ class WhoAmIWidget extends StatelessWidget {
   }
 
   double get subtitleFontSize {
-    if (size.width < 640) {
+    if (size.width < 480) {
+      return 24.0;
+    } else if (size.width < 640) {
       return 36.0;
-    } else if (size.width < 1200) {
+    } else if (size.width < 1400) {
       return 48.0;
     } else {
       return 64.0;

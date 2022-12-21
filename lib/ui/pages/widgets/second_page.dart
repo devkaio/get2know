@@ -22,69 +22,71 @@ class Second extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(color: Colors.orange),
-          AnimatedBuilder(
-              animation: processIndex,
-              builder: (context, state) {
-                return LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxWidth <= 960) {
-                      return ConstrainedBox(
-                        constraints: constraints,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 64.0),
-                          child: MyTimeline(
-                            scrollDirection: Axis.vertical,
-                            list: jobList,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return ConstrainedBox(
-                        constraints: constraints,
+      body: LayoutBuilder(builder: (context, constraints) {
+        return ConstrainedBox(
+          constraints: constraints,
+          child: Stack(
+            children: [
+              Container(color: Colors.orange),
+              AnimatedBuilder(
+                animation: processIndex,
+                builder: (context, state) {
+                  if (constraints.maxWidth <= 960) {
+                    return ConstrainedBox(
+                      constraints: constraints,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 64.0),
                         child: MyTimeline(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.vertical,
                           list: jobList,
                         ),
-                      );
-                    }
-                  },
-                );
-              }),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: IconButton(
-                onPressed: () => pageController.previousPage(
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.ease,
-                    ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_up_rounded,
-                  color: Colors.white,
-                  size: 56.0,
-                )),
+                      ),
+                    );
+                  } else {
+                    return ConstrainedBox(
+                      constraints: constraints,
+                      child: MyTimeline(
+                        scrollDirection: Axis.horizontal,
+                        list: jobList,
+                      ),
+                    );
+                  }
+                },
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                child: IconButton(
+                    onPressed: () => pageController.previousPage(
+                          duration: const Duration(milliseconds: 700),
+                          curve: Curves.ease,
+                        ),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_up_rounded,
+                      color: Colors.white,
+                      size: 56.0,
+                    )),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 16.0,
+                child: IconButton(
+                    onPressed: () => pageController.nextPage(
+                          duration: const Duration(milliseconds: 700),
+                          curve: Curves.ease,
+                        ),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Colors.white,
+                      size: 56.0,
+                    )),
+              ),
+            ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 16.0,
-            child: IconButton(
-                onPressed: () => pageController.nextPage(
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.ease,
-                    ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Colors.white,
-                  size: 56.0,
-                )),
-          ),
-        ],
-      ),
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           processIndex.value = (processIndex.value + 1) % jobList.length;
