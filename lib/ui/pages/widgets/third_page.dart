@@ -25,6 +25,7 @@ class Third extends StatelessWidget {
               options: CarouselOptions(),
               itemBuilder: (context, index, realIndex) => Image.asset(
                 photos[index].path,
+                fit: BoxFit.fitHeight,
               ),
             ),
           ),
