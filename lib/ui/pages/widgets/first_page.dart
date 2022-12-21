@@ -18,14 +18,17 @@ class First extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(100.0),
             child: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth > 1100.0) {
+              if (constraints.maxWidth >= 1200.0) {
                 return ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1500.0),
                   child: Row(
                     children: const [
                       WhoAmIWidget(),
                       Spacer(),
-                      ProfilePictureWidget(),
+                      SizedBox(width: 32.0),
+                      ProfilePictureWidget(
+                        size: Size(350.0, 350.0),
+                      ),
                     ],
                   ),
                 );
@@ -63,29 +66,21 @@ class First extends StatelessWidget {
 }
 
 class ProfilePictureWidget extends StatelessWidget {
+  final Size size;
   const ProfilePictureWidget({
     Key? key,
+    this.size = const Size(250.0, 250.0),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(175.0),
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(175.0),
-        ),
-        child: Image.network(
-          'https://avatars.githubusercontent.com/u/3959419',
-          fit: BoxFit.cover,
-          width: 350,
-          height: 350,
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(size.width)),
+      child: Image.network(
+        'https://avatars.githubusercontent.com/u/3959419',
+        fit: BoxFit.cover,
+        height: size.height,
+        width: size.width,
       ),
     );
   }
@@ -106,18 +101,24 @@ class WhoAmIWidget extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        Text(
-          "Quem sou eu?",
-          style:
-              Theme.of(context).textTheme.headline1?.apply(color: Colors.white),
+        FittedBox(
+          child: Text(
+            "Quem sou eu?",
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                ?.apply(color: Colors.white),
+          ),
         ),
         Text(
           "Kaio Costa de Oliveira",
+          textAlign: TextAlign.center,
           style:
               Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
         ),
         Text(
           "Flutter Developer",
+          textAlign: TextAlign.center,
           style:
               Theme.of(context).textTheme.headline4?.apply(color: Colors.white),
         ),

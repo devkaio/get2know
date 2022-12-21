@@ -10,9 +10,11 @@ const todoColor = Color.fromARGB(255, 255, 255, 255);
 ValueNotifier processIndex = ValueNotifier(0);
 
 class MyTimeline extends StatelessWidget {
+  final Axis? scrollDirection;
   final List<Map<String, dynamic>> list;
   const MyTimeline({
     Key? key,
+    this.scrollDirection = Axis.horizontal,
     required this.list,
   }) : super(key: key);
 
@@ -29,14 +31,14 @@ class MyTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Timeline.tileBuilder(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: scrollDirection,
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.before,
         itemCount: list.length,
         itemExtentBuilder: (context, index) =>
             MediaQuery.of(context).size.width / list.length,
         oppositeContentsBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             '${list[index].values.first}',
             style: index == processIndex.value
@@ -45,18 +47,21 @@ class MyTimeline extends StatelessWidget {
           ),
         ),
         contentsBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Text(
-            list[index].keys.first,
-            style: index == processIndex.value
-                ? Theme.of(context).textTheme.headline4?.copyWith(
-                      color: completeColor,
-                      fontWeight: FontWeight.bold,
-                    )
-                : Theme.of(context)
-                    .textTheme
-                    .headline5
-                    ?.copyWith(color: Colors.grey.shade100),
+          padding: const EdgeInsets.all(8.0),
+          child: FittedBox(
+            child: Text(
+              list[index].keys.first,
+              textAlign: TextAlign.center,
+              style: index == processIndex.value
+                  ? Theme.of(context).textTheme.headline4?.copyWith(
+                        color: completeColor,
+                        fontWeight: FontWeight.bold,
+                      )
+                  : Theme.of(context)
+                      .textTheme
+                      .headline5
+                      ?.copyWith(color: Colors.grey.shade100),
+            ),
           ),
         ),
         connectorBuilder: (context, index, type) {

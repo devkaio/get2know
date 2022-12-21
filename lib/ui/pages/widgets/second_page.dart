@@ -28,9 +28,21 @@ class Second extends StatelessWidget {
           AnimatedBuilder(
               animation: processIndex,
               builder: (context, state) {
-                return MyTimeline(
-                  list: jobList,
-                );
+                return LayoutBuilder(builder: (context, constraints) {
+                  if (constraints.maxWidth <= 960) {
+                    return Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: MyTimeline(
+                        scrollDirection: Axis.vertical,
+                        list: jobList,
+                      ),
+                    );
+                  } else {
+                    return MyTimeline(
+                      list: jobList,
+                    );
+                  }
+                });
               }),
           Positioned(
             left: 0,
