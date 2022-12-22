@@ -65,7 +65,7 @@ class Fifth extends StatelessWidget {
                     ),
                 icon: const Icon(
                   Icons.keyboard_arrow_up_rounded,
-                  color: Color(0xFF593493),
+                  color: Colors.white,
                   size: 56.0,
                 )),
           ),
