@@ -4,9 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_to_know_me_better_app/data/models/photo.dart';
 
-class Fifth extends StatelessWidget {
+import 'widgets/widgets.dart';
+
+class FifthPage extends StatelessWidget {
   final PageController pageController;
-  const Fifth({
+  const FifthPage({
     Key? key,
     required this.pageController,
   }) : super(key: key);
@@ -15,7 +17,9 @@ class Fifth extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Photo> photos = List.generate(
         3, (index) => Photo(path: 'assets/places/${index + 1}.jpg'));
+
     final indexNotifier = ValueNotifier(0);
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -27,7 +31,7 @@ class Fifth extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage(
-                    'assets/places${indexNotifier.value + 1}.jpg',
+                    'assets/places/${indexNotifier.value + 1}.jpg',
                   ),
                   fit: BoxFit.cover,
                 )),
@@ -54,21 +58,7 @@ class Fifth extends StatelessWidget {
               );
             },
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: IconButton(
-                onPressed: () => pageController.previousPage(
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.ease,
-                    ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_up_rounded,
-                  color: Colors.white,
-                  size: 56.0,
-                )),
-          ),
+          PreviewsPageButton(pageController: pageController),
         ],
       ),
     );

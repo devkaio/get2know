@@ -4,9 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_to_know_me_better_app/data/models/photo.dart';
 
-class Third extends StatelessWidget {
+import 'widgets/widgets.dart';
+
+class FourthPage extends StatelessWidget {
   final PageController pageController;
-  const Third({
+  const FourthPage({
     Key? key,
     required this.pageController,
   }) : super(key: key);
@@ -14,7 +16,7 @@ class Third extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Photo> photos = List.generate(
-        13, (index) => Photo(path: 'assets/family/${index + 1}.jpeg'));
+        20, (index) => Photo(path: 'assets/tv_show/${index + 1}.jpg'));
     final indexNotifier = ValueNotifier(0);
     return Scaffold(
       body: Stack(
@@ -27,7 +29,7 @@ class Third extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage(
-                    'assets/family/${indexNotifier.value + 1}.jpeg',
+                    'assets/tv_show/${indexNotifier.value + 1}.jpg',
                   ),
                   fit: BoxFit.cover,
                 )),
@@ -43,6 +45,7 @@ class Third extends StatelessWidget {
           CarouselSlider.builder(
             itemCount: photos.length,
             options: CarouselOptions(
+              aspectRatio: 2 / 3,
               enlargeCenterPage: true,
               onPageChanged: (index, reason) => indexNotifier.value = index,
             ),
@@ -53,36 +56,8 @@ class Third extends StatelessWidget {
               );
             },
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: IconButton(
-                onPressed: () => pageController.previousPage(
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.ease,
-                    ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_up_rounded,
-                  color: Colors.white,
-                  size: 56.0,
-                )),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 16.0,
-            child: IconButton(
-                onPressed: () => pageController.nextPage(
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.ease,
-                    ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Colors.white,
-                  size: 56.0,
-                )),
-          ),
+          PreviewsPageButton(pageController: pageController),
+          NextPageButton(pageController: pageController),
         ],
       ),
     );
